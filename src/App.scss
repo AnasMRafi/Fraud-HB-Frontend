@@ -1,0 +1,264 @@
+// Global styles
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  overflow: hidden;
+  height: 100%;
+}
+
+body {
+  height: 100%;
+  overflow: hidden;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  background-color: #f8fafc;
+  color: #1d1d1f;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  height: 100%;
+  overflow: hidden;
+}
+
+// App Layout
+.app-layout {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  position: relative;
+  overflow: hidden;
+}
+
+// Main Content Wrapper
+.main-content-wrapper {
+  flex: 1;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background-color: #f8fafc;
+  
+  // Smooth transition when sidebar expands/collapses
+  transition: margin-left 300ms ease-in-out, width 300ms ease-in-out;
+}
+
+// Content Container
+.content-container {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  position: relative;
+  
+  // Custom scrollbar styles
+  &::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: #f1f5f9;
+    border-radius: 4px;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 4px;
+    
+    &:hover {
+      background: #94a3b8;
+    }
+  }
+}
+
+// Page Container (for individual pages)
+.page-container {
+  padding: 24px;
+  max-width: 100%;
+  margin: 0 auto;
+  
+  @media (min-width: 640px) {
+    padding: 32px;
+  }
+  
+  @media (min-width: 1024px) {
+    padding: 40px;
+  }
+}
+
+// Responsive Grid Adjustments
+.dashboard-grid {
+  display: grid;
+  gap: 20px;
+  width: 100%;
+  
+  // When sidebar is expanded
+  .sidebar-expanded & {
+    @media (min-width: 768px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    
+    @media (min-width: 1280px) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    
+    @media (min-width: 1536px) {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+  
+  // When sidebar is collapsed - more space for content
+  .sidebar-collapsed & {
+    @media (min-width: 640px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    
+    @media (min-width: 1024px) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    
+    @media (min-width: 1280px) {
+      grid-template-columns: repeat(4, 1fr);
+    }
+    
+    @media (min-width: 1536px) {
+      grid-template-columns: repeat(5, 1fr);
+    }
+  }
+}
+
+// Stats Cards
+.stat-card {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e5e7eb;
+  transition: transform 0.2s, box-shadow 0.2s;
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+}
+
+// Chart Container
+.chart-container {
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e5e7eb;
+  height: 100%;
+  min-height: 400px;
+  
+  // Responsive width adjustment
+  .sidebar-collapsed & {
+    @media (min-width: 1024px) {
+      .chart-wrapper {
+        max-width: 100%;
+      }
+    }
+  }
+}
+
+// Table Container
+.table-container {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e5e7eb;
+  
+  .table-header {
+    padding: 20px 24px;
+    border-bottom: 1px solid #e5e7eb;
+    background-color: #f9fafb;
+  }
+  
+  .table-content {
+    overflow-x: auto;
+    
+    &::-webkit-scrollbar {
+      height: 6px;
+    }
+    
+    &::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+    
+    &::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 3px;
+    }
+  }
+}
+
+// Fix for Material-UI components spacing
+.MuiPaper-root {
+  // Ensure Material-UI Paper components don't overflow
+  max-width: 100%;
+}
+
+.MuiGrid-container {
+  // Adjust Material-UI Grid spacing when sidebar is collapsed
+  .sidebar-collapsed & {
+    @media (min-width: 1024px) {
+      &.dashboard-stats {
+        .MuiGrid-item {
+          max-width: 20% !important;
+          flex-basis: 20% !important;
+        }
+      }
+    }
+  }
+}
+
+// Utility Classes
+.w-full {
+  width: 100%;
+}
+
+.h-full {
+  height: 100%;
+}
+
+.overflow-hidden {
+  overflow: hidden;
+}
+
+.overflow-auto {
+  overflow: auto;
+}
+
+// Animations
+@keyframes slideIn {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.animate-slideIn {
+  animation: slideIn 0.3s ease-out;
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.3s ease-out;
+}
